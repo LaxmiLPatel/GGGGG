@@ -42,7 +42,7 @@ app.get("/loader.gif", (req, res) => {
   res.sendFile(__dirname + "/loader.gif");
 });
 
-const ggai = new GoogleGenerativeAI("AIzaSyDYqE43o6WJOH4mHiJkc07vTXF1E6jnIZs");
+const ggai = new GoogleGenerativeAI("------------------------------");
 const ggmo = ggai.getGenerativeModel({ model: "gemini-pro" });
 const ggco = { temperature: 0.9, topK: 1, topP: 1, maxOutputTokens: 1000 };
 const ggsa = [
