@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GEMENU - Gemini Enabled Menu for Eating for Nutritional Upliftment</title>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="GEMENU - Gemini Enabled Menu for Eating for Nutritional Upliftment" />
+  <meta name="description" content="GEMENU - Gemini Enabled Menu for Eating for Nutritional Upliftment" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="cont">
+    <div id="ptop">
+      <table>
+        <tr>
+          <td>
+            <img id="imgp" src="img/gemenu.jpg" alt="Gemenu" />
+          </td>
+          <td>
+            <div id="xyz1">
+              <a class="xyz3" href="../" target=”_blank”>About</a> |
+              <font id="xyz2">Gemenu</font> |
+              <a class="xyz3" href="gemedi" target=”_blank”>Gemedi</a> |
+              <a class="xyz3" href="gemtax" target=”_blank”>Gemtax</a> |
+              <a class="xyz3" href="gemlla" target=”_blank”>Gemlla</a>
+            </div>
+            <font id="pnam">GEMENU</font><br />
+            <font id="pdes">Gemini Enabled Menu for Eating for Nutritional Upliftment</font>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="hist">
+      <embed id="hitt" src="posts/pemenu.html"></embed>
+    </div>
+    <form id="form">
+      <input type="text" class="ifor" id="inpA" placeholder="Dietary restrictions">
+      <input type="text" class="ifor" id="inpB" placeholder="Health issues">
+      <input type="text" class="ifor" id="inpC" placeholder="Foods available">
+      <button type="submit" id="bfor">Send</button>
+    </form>
+    <button onclick="badd()" id="badd">a</button>
+    <input type="text" class="iadd" id="iadd">
+    <input type="text" class="iadd" id="isli">
+    <input type="text" class="iadd" id="ista">
+  </div>
+
+  <div id="gifl">
+    <img src="loader.gif" width="150px" alt="Loading...">
+  </div>
+
+  <script>
+    const hist = document.getElementById('hist');
+    const hitt = document.getElementById('hitt');
+    const form = document.getElementById('form');
+    const inpA = document.getElementById('inpA');
+    const inpB = document.getElementById('inpB');
+    const inpC = document.getElementById('inpC');
+    const gifl = document.getElementById('gifl');
+    const iadd = document.getElementById('iadd');
+    const isli = document.getElementById('isli');
+    const ista = document.getElementById('ista');
+
+    async function mess(e) {
+      const msgU = "My dietary restrictions are ".concat(inpA.value, ". My health issues are ", inpB.value, ". Foods available are ", inpC.value, ". What food should I order\?");
+      console.log(msgU);
+      try {
+        const resp = await fetch('/gemenu', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inpU: msgU }),
+        });
+        hist.innerHTML = '<embed id="hitt" src="posts/pemenu.html"></embed>';
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      gifl.style.display = 'block';
+      mess().finally(() => {
+        inpA.value = '';
+        inpB.value = '';
+        inpC.value = '';
+        gifl.style.display = 'none';
+      });;
+    });
+
+    function sleep(m) {
+      return new Promise(r => setTimeout(r, m));
+    };
+
+    async function badd() {
+      const vadd = iadd.value;
+      var vsli = parseInt(isli.value);
+      if (isNaN(vsli)) { vsli = 0; };
+      var vsta = parseInt(ista.value);
+      if (isNaN(vsta)) { vsta = 0; };
+      var vbal = vadd.length - (vadd.replaceAll("~", "")).length;
+      if (vadd != "" && vsta < vbal) {
+        const sabc = vadd.split("~")[vsta];
+        const strA = sabc.split("|")[0];
+        const strB = sabc.split("|")[1];
+        const strC = sabc.split("|")[2];
+        for (let i = 0; i < strA.length + 1; i++) {
+          await sleep(vsli);
+          inpA.value = strA.substring(0, i);
+        }
+        await sleep(1000);
+        for (let i = 0; i < strB.length + 1; i++) {
+          await sleep(vsli);
+          inpB.value = strB.substring(0, i);
+        }
+        await sleep(1000);
+        for (let i = 0; i < strC.length + 1; i++) {
+          await sleep(vsli);
+          inpC.value = strC.substring(0, i);
+        }
+        await sleep(1000);
+        ista.value = vsta + 1;
+      }
+    }
+  </script>
+</body>
+
+</html>

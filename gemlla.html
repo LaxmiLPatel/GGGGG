@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GEMLLA - Google Gemini Compared to Meta Llama</title>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="GEMLLA - Google Gemini Compared to Meta Llama" />
+  <meta name="description" content="GEMLLA - Google Gemini Compared to Meta Llama" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="img/favicon.ico" rel="icon" type="image/x-icon" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="cont">
+    <div id="ptop">
+      <table>
+        <tr>
+          <td>
+            <img id="imgp" src="img/gemlla.jpg" alt="Gemenu" />
+          </td>
+          <td>
+            <div id="xyz1">
+              <a class="xyz3" href="../" target=”_blank”>About</a> |
+              <a class="xyz3" href="gemenu" target=”_blank”>Gemenu</a> |
+              <a class="xyz3" href="gemedi" target=”_blank”>Gemedi</a> |
+              <a class="xyz3" href="gemtax" target=”_blank”>Gemtax</a> |
+              <font id="xyz2">Gemlla</font> |
+            </div>
+            <font id="pnam">GEMLLA</font><br />
+            <font id="pdes">Google Gemini Compared to Meta Llama</font>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="hist">
+      <embed id="hitt" src="posts/pemlla.html"></embed>
+    </div>
+    <form id="form">
+      <table id="tabl">
+        <tr>
+          <td>
+            <input type="text" class="ifor" id="inpA"
+              placeholder="Dietary restrictions / Health condition / Tax jurisdiction">
+          </td>
+          <td>
+            <input type="text" class="ifor" id="inpB" placeholder="Health issues / Eating status / Tax type">
+          </td>
+          <td>
+            <input type="text" class="ifor" id="inpC"
+              placeholder="Foods available / Medicines taken together / Tax question">
+          </td>
+          <td>
+            <button type="submit" id="bfor">Send</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <input type="radio" name="opti" value="0" checked>Dietary restrictions, Health issues, Foods available |
+    <input type="radio" name="opti" value="1">Health condition, Eating status, Medicines taken together |
+    <input type="radio" name="opti" value="2">Tax jurisdiction, Tax type, Tax question
+    <button onclick="badd()" id="badd">a</button>
+    <input type="text" class="iadd" id="iadd">
+    <input type="text" class="iadd" id="isli">
+    <input type="text" class="iadd" id="ista">
+  </div>
+
+  <div id="gifl">
+    <img src="loader.gif" width="150px" alt="Loading...">
+  </div>
+
+  <script>
+    const hist = document.getElementById('hist');
+    const hitt = document.getElementById('hitt');
+    const form = document.getElementById('form');
+    const inpA = document.getElementById('inpA');
+    const inpB = document.getElementById('inpB');
+    const inpC = document.getElementById('inpC');
+    const gifl = document.getElementById('gifl');
+    const iadd = document.getElementById('iadd');
+    const isli = document.getElementById('isli');
+    const ista = document.getElementById('ista');
+
+    async function mess(e) {
+      const opti = document.querySelector('input[name="opti"]:checked').value;
+      const msgU = ["My dietary restrictions are ".concat(inpA.value, ". My health issues are ", inpB.value, ". Foods available are ", inpC.value, ". What food should I order\?"), "My health condition is ".concat(inpA.value, ". My food eating status is ", inpB.value, ". I am to take medicines ", inpC.value, ". What complications can occur if I take these medicines together\?"), "For tax jurisdiction of ".concat(inpA.value, " and for the tax type of ", inpB.value, ", my tax question is ", inpC.value)][opti];
+      console.log(msgU);
+      try {
+        const resp = await fetch('/gemlla', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inpU: msgU }),
+        });
+        hist.innerHTML = '<embed id="hitt" src="posts/pemlla.html"></embed>';
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      gifl.style.display = 'block';
+      mess().finally(() => {
+        inpA.value = '';
+        inpB.value = '';
+        inpC.value = '';
+        gifl.style.display = 'none';
+      });;
+    });
+
+    function sleep(m) {
+      return new Promise(r => setTimeout(r, m));
+    };
+
+    async function badd() {
+      // const vadd = iadd.value;
+      const vadd = "0|Vegan|Catarrh, Heart attack, Itching|Masala dosa, Tacos, Hummus, Goi cuon, Lasagna, Pastel de nata, Chicken muamba~1|Chronic pancreatitis, Psychosis|Not eaten for four days|Emtricitabine, L-glutamine, Prednisone, Amifostine, Probenecid, Meperidine~2|Country of Sudan|Wealth tax|What is the revenue?~0|Kosher|Epilepsy, Ewing sarcoma: Children, Bone cancer|Seafood paella, Stinky tofu, Maple syrup, Lechón, Croissant, Donuts, Penang assam laksa~1|Catarrh, Heart attack|Not eaten whole day|Deferasirox, Propoxyphene, Amphotericin B, Maraviroc, Dexamethasone, Topotecan~2|California Orange County City of La Palma|Motor fuel tax|How do they report?~1|Jain|Non-Hodgkin lymphoma, Haemorrhoids, Reactive arthritis|Som tam, Marzipan, Fish n chips, Fajitas, Arepas, Corn on the cob, Hamburger~1|Anorexia nervosa, Discoid eczema|Breaksfast not taken yet|Sirolimus, Thiotepa, Didanosine, Bosentan, Efavirenz, Sunitinib~2|USA State of Texas|Tangible personal property tax|How to report it?";
+      var vsli = parseInt(isli.value);
+      if (isNaN(vsli)) { vsli = 200; };
+      var vsta = parseInt(ista.value);
+      if (isNaN(vsta)) { vsta = 0; };
+      var vbal = vadd.length - (vadd.replaceAll("~", "")).length;
+      if (vadd != "" && vsta < vbal) {
+        const sabc = vadd.split("~")[vsta];
+        document.querySelector('input[name="opti"][value="0"]').checked = false;
+        document.querySelector('input[name="opti"][value="1"]').checked = false;
+        document.querySelector('input[name="opti"][value="2"]').checked = false;
+        document.querySelector('input[name="opti"][value="' + sabc.split("|")[0] + '"').checked = true;
+        const strA = sabc.split("|")[1];
+        const strB = sabc.split("|")[2];
+        const strC = sabc.split("|")[3];
+        for (let i = 0; i < strA.length + 1; i++) {
+          await sleep(vsli);
+          inpA.value = strA.substring(0, i);
+        }
+        await sleep(1000);
+        for (let i = 0; i < strB.length + 1; i++) {
+          await sleep(vsli);
+          inpB.value = strB.substring(0, i);
+        }
+        await sleep(1000);
+        for (let i = 0; i < strC.length + 1; i++) {
+          await sleep(vsli);
+          inpC.value = strC.substring(0, i);
+        }
+        await sleep(1000);
+        ista.value = vsta + 1;
+      }
+    }
+  </script>
+</body>
+
+</html>
