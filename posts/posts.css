@@ -1,0 +1,17 @@
+.blto {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.blus {
+  background-color: #fff6f6;
+  width: 100%;
+}
+.blgg {
+  background-color: #f6fff6;
+  width: 100%;
+}
+.blml {
+  background-color: #f6f6ff;
+  width: 100%;
+}
